@@ -1,6 +1,7 @@
 # Build output
 build/
 *.apk
+!dist/*.apk
 *.aab
 *.keystore
 *.jks

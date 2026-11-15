@@ -45,6 +45,10 @@ ANDROID_SDK_ROOT=~/Android/Sdk ./build.sh
 
 Output: `build/nijatva-notes.apk`, signed with a local debug key. Replace it with your own release key before distributing anything.
 
+## Download
+
+A debug-signed build of version 0.1.0 sits in [`dist/nijatva-notes-0.1.0.apk`](dist/nijatva-notes-0.1.0.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
+
 ## Documents
 
 - [`docs/SPEC.md`](docs/SPEC.md) — product and technical specification
