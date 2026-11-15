@@ -24,6 +24,7 @@ public class NotebooksActivity extends Activity {
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        Ui.apply(this);
         setContentView(build());
     }
 

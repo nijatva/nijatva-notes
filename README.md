@@ -32,6 +32,8 @@ Every Nijatva app has to run on AOSP without Google Play Services, which means i
 - Recently deleted: 30-day retention, restore, delete forever, empty
 - Vault: passphrase setup, per-note lock with AES-256-GCM, auto-lock on background
 - Export a note as `.md` through SAF
+- Appearance: System / Dark / Light / Black themes, Green / Saffron / Indigo accents
+- About: developer card with live GitHub profile link
 
 Not yet: import, grid view, biometric unlock, attachments, search index (FTS), Compose UI.
 
@@ -47,7 +49,7 @@ Output: `build/nijatva-notes.apk`, signed with a local debug key. Replace it wit
 
 ## Download
 
-A debug-signed build of version 0.1.1 sits in [`dist/nijatva-notes-0.1.1.apk`](dist/nijatva-notes-0.1.1.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
+A debug-signed build of version 0.2.0 sits in [`dist/nijatva-notes-0.2.0.apk`](dist/nijatva-notes-0.2.0.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
 
 ## Documents
 

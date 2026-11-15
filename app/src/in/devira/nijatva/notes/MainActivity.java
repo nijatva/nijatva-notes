@@ -37,10 +37,13 @@ public class MainActivity extends Activity {
     private TextView emptyLabel;
     private final List<Object> rows = new ArrayList<>();
     private Store.Note pendingExport;
+    private int uiRev;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        Ui.apply(this);
+        uiRev = Theme.rev;
         setContentView(buildUi());
         reload();
     }
@@ -48,6 +51,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (Theme.rev != uiRev) {
+            recreate();
+            return;
+        }
         reload();
     }
 
@@ -262,7 +269,9 @@ public class MainActivity extends Activity {
         p.getMenu().add(0, 3, 2, "Sort by title");
         p.getMenu().add(0, 4, 3, "Notebooks");
         p.getMenu().add(0, 5, 4, "Recently deleted");
-        p.getMenu().add(0, 6, 5, Vault.isUnlocked() ? "Lock vault now"
+        p.getMenu().add(0, 7, 5, "Appearance");
+        p.getMenu().add(0, 8, 6, "About");
+        p.getMenu().add(0, 6, 7, Vault.isUnlocked() ? "Lock vault now"
                 : (Vault.isSet(this) ? "Unlock vault" : "Set up vault"));
         p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(android.view.MenuItem item) {
@@ -287,6 +296,12 @@ public class MainActivity extends Activity {
                         return true;
                     case 5:
                         startActivity(new Intent(MainActivity.this, TrashActivity.class));
+                        return true;
+                    case 7:
+                        startActivity(new Intent(MainActivity.this, AppearanceActivity.class));
+                        return true;
+                    case 8:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
                         return true;
                     case 6:
                         vaultMenu();

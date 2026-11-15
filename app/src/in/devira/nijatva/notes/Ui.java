@@ -1,5 +1,6 @@
 package in.devira.nijatva.notes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,18 +14,33 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-/** Colour, spacing and small widget helpers. Stands in for nijatva-core's design
- *  system until that library exists. */
+/** Colour, spacing and small widget helpers. The palette mirrors {@link Theme}
+ *  and is refreshed by {@link #apply(Activity)} at the top of every screen. */
 public class Ui {
 
-    public static final int BG = 0xFF0E0E0E;
-    public static final int CARD = 0xFF1C1C1C;
-    public static final int CARD_HI = 0xFF262626;
-    public static final int TEXT = 0xFFEDEDED;
-    public static final int MUTED = 0xFF8C8C8C;
-    public static final int ACCENT = 0xFFF5B841;
-    public static final int LINE = 0xFF2C2C2C;
-    public static final int DANGER = 0xFFE0645A;
+    public static int BG = 0xFF0E0E0E;
+    public static int CARD = 0xFF1C1C1C;
+    public static int CARD_HI = 0xFF262626;
+    public static int TEXT = 0xFFEDEDED;
+    public static int MUTED = 0xFF8C8C8C;
+    public static int ACCENT = 0xFFF5B841;
+    public static int LINE = 0xFF2C2C2C;
+    public static int DANGER = 0xFFE0645A;
+    public static int ON_ACCENT = 0xFF10130F;
+
+    public static void apply(Activity a) {
+        Theme.resolve(a);
+        BG = Theme.bg;
+        CARD = Theme.card;
+        CARD_HI = Theme.cardHi;
+        TEXT = Theme.text;
+        MUTED = Theme.muted;
+        ACCENT = Theme.accent;
+        LINE = Theme.line;
+        DANGER = Theme.danger;
+        ON_ACCENT = Theme.onAccent;
+        Theme.window(a);
+    }
 
     public static int dp(Context c, float v) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v, c.getResources().getDisplayMetrics());
@@ -40,6 +56,13 @@ public class Ui {
     public static GradientDrawable outline(Context c, int color, int stroke, float radiusDp) {
         GradientDrawable d = round(c, Color.TRANSPARENT, radiusDp);
         d.setStroke(dp(c, stroke), color);
+        return d;
+    }
+
+    public static GradientDrawable circle(Context c, int color) {
+        GradientDrawable d = new GradientDrawable();
+        d.setShape(GradientDrawable.OVAL);
+        d.setColor(color);
         return d;
     }
 
@@ -64,7 +87,7 @@ public class Ui {
     }
 
     public static TextView chip(Context c, String label, boolean selected) {
-        TextView t = text(c, label, 13f, selected ? BG : TEXT);
+        TextView t = text(c, label, 13f, selected ? ON_ACCENT : TEXT);
         t.setGravity(Gravity.CENTER);
         int px = dp(c, 14), py = dp(c, 7);
         t.setPadding(px, py, px, py);

@@ -24,6 +24,7 @@ public class TrashActivity extends Activity {
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        Ui.apply(this);
         ScrollView sc = new ScrollView(this);
         sc.setBackgroundColor(Ui.BG);
         LinearLayout root = new LinearLayout(this);

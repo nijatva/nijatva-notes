@@ -28,8 +28,8 @@ echo "== aapt2 link"
   --java "$OUT/gen" \
   --min-sdk-version 26 \
   --target-sdk-version 34 \
-  --version-code 2 \
-  --version-name "0.1.1" \
+  --version-code 3 \
+  --version-name "0.2.0" \
   --auto-add-overlay
 
 echo "== javac"

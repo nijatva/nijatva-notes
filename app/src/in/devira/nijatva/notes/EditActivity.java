@@ -41,6 +41,7 @@ public class EditActivity extends Activity {
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        Ui.apply(this);
         store = new Store(this);
         note = store.get(getIntent().getStringExtra("note_id"));
         if (note == null) {
