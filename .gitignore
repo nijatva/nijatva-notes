@@ -1,0 +1,12 @@
+# Build output
+build/
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+
+# Editor
+.idea/
+*.iml
+.DS_Store
