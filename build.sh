@@ -28,8 +28,8 @@ echo "== aapt2 link"
   --java "$OUT/gen" \
   --min-sdk-version 26 \
   --target-sdk-version 34 \
-  --version-code 1 \
-  --version-name "0.1.0" \
+  --version-code 2 \
+  --version-name "0.1.1" \
   --auto-add-overlay
 
 echo "== javac"
@@ -41,7 +41,7 @@ javac -source 8 -target 8 -nowarn \
 
 echo "== d8"
 find "$OUT/classes" -name '*.class' > "$OUT/classes.txt"
-"$BT/d8" --lib "$PLAT" --min-api 26 --output "$OUT/dex" @"$OUT/classes.txt"
+"$BT/d8" -JXmx256M -JXss512k --lib "$PLAT" --min-api 26 --output "$OUT/dex" @"$OUT/classes.txt"
 
 echo "== package"
 cp "$OUT/base.apk" "$OUT/unsigned.apk"
@@ -60,7 +60,7 @@ if [ ! -f "$KS" ]; then
 fi
 
 echo "== sign"
-"$BT/apksigner" sign \
+"$BT/apksigner" -JXmx256M -JXss512k sign \
   --ks "$KS" \
   --ks-pass pass:android \
   --key-pass pass:android \
@@ -69,6 +69,6 @@ echo "== sign"
   --out "$OUT/$NAME.apk" \
   "$OUT/aligned.apk"
 
-"$BT/apksigner" verify --print-certs "$OUT/$NAME.apk" | head -4
+"$BT/apksigner" -JXmx256M -JXss512k verify --print-certs "$OUT/$NAME.apk" | head -4
 echo "== done: $OUT/$NAME.apk"
 ls -lh "$OUT/$NAME.apk"

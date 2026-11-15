@@ -47,7 +47,7 @@ Output: `build/nijatva-notes.apk`, signed with a local debug key. Replace it wit
 
 ## Download
 
-A debug-signed build of version 0.1.0 sits in [`dist/nijatva-notes-0.1.0.apk`](dist/nijatva-notes-0.1.0.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
+A debug-signed build of version 0.1.1 sits in [`dist/nijatva-notes-0.1.1.apk`](dist/nijatva-notes-0.1.1.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
 
 ## Documents
 
