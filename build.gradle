@@ -1,0 +1,4 @@
+// Nijatva Notes — root build file. No dependencies outside the Android SDK.
+plugins {
+    id 'com.android.application' version '8.5.2' apply false
+}

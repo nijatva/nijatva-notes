@@ -39,17 +39,22 @@ Not yet: import, grid view, biometric unlock, attachments, search index (FTS), C
 
 ## Build
 
-No Gradle. `./build.sh` runs aapt2 → javac → d8 → zipalign → apksigner and needs a JDK 17, build-tools 34.0.0 and platform android-34, with `ANDROID_SDK_ROOT` pointing at the SDK.
+Standard Gradle project, no plugins beyond the Android Gradle Plugin.
 
 ```sh
-ANDROID_SDK_ROOT=~/Android/Sdk ./build.sh
+./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleRelease      # unsigned; add your own signing config
 ```
 
-Output: `build/nijatva-notes.apk`, signed with a local debug key. Replace it with your own release key before distributing anything.
+Requires JDK 17 and the Android SDK with platform 34 and build-tools 34.0.0. Open the folder in Android Studio and it configures itself.
 
-## Download
+`build.sh` is a fallback that packages the same sources without Gradle (aapt2 → javac → d8 → zipalign → apksigner), for machines without Gradle or network access:
 
-A debug-signed build of version 0.2.0 sits in [`dist/nijatva-notes-0.2.0.apk`](dist/nijatva-notes-0.2.0.apk). Install with `adb install`, or open the file on the phone. It is signed with a throwaway key, so treat it as a test build.
+```sh
+ANDROID_SDK_ROOT=~/Android/Sdk bash build.sh
+```
+
+The app has no dependencies — `app/build.gradle` has an empty `dependencies` block on purpose.
 
 ## Documents
 

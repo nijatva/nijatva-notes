@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'in.devira.nijatva.notes'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'in.devira.nijatva.notes'
+        minSdk 26
+        targetSdk 34
+        versionCode 3
+        versionName '0.2.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+// Deliberately empty: the app runs on the framework alone, with no AndroidX,
+// no GMS and no third-party libraries.
+dependencies {
+}
