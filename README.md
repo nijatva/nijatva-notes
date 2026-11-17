@@ -4,6 +4,8 @@ Offline Markdown notes with an optional encrypted vault.
 
 Part of the [Nijatva](https://vasudev-work.github.io) suite by **DEVIRA**: small, single-purpose Android apps built without Google Play Services, without accounts, without ads and without analytics.
 
+**Page:** [nijatva.github.io/nijatva-notes](https://nijatva.github.io/nijatva-notes/)
+
 ## Status
 
 Phase 1 scaffold: working prototype, debug-signed APK builds and installs. UI layer is framework Views in Java, not yet the Compose layer described in the spec.
