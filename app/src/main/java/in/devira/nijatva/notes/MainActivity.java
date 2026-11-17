@@ -23,6 +23,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nijatva.signature.Signature;
+import com.nijatva.signature.SignatureTheme;
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +41,13 @@ public class MainActivity extends Activity {
     private TextView emptyLabel;
     private final List<Object> rows = new ArrayList<>();
     private Store.Note pendingExport;
-    private int uiRev;
+    private int uiSig;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         Ui.apply(this);
-        uiRev = Theme.rev;
+        uiSig = paletteSig();
         setContentView(buildUi());
         reload();
     }
@@ -52,7 +55,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Theme.rev != uiRev) {
+        if (paletteSig() != uiSig) {
             recreate();
             return;
         }
@@ -260,6 +263,13 @@ public class MainActivity extends Activity {
         ((BaseAdapter) list.getAdapter()).notifyDataSetChanged();
     }
 
+    /** Cheap fingerprint of the palette, so a theme change from the shared
+     *  Appearance screen rebuilds this activity instead of leaving stale colours. */
+    private int paletteSig() {
+        return SignatureTheme.background(this) ^ SignatureTheme.accent(this)
+                ^ (SignatureTheme.isDark(this) ? 1 : 0);
+    }
+
     private void open(Store.Note n) {
         Intent i = new Intent(this, EditActivity.class);
         i.putExtra("note_id", n.id);
@@ -311,10 +321,10 @@ public class MainActivity extends Activity {
                         startActivity(new Intent(MainActivity.this, TrashActivity.class));
                         return true;
                     case 7:
-                        startActivity(new Intent(MainActivity.this, AppearanceActivity.class));
+                        startActivity(Signature.appearance(MainActivity.this));
                         return true;
                     case 8:
-                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        startActivity(Signature.developer(MainActivity.this));
                         return true;
                     case 6:
                         vaultMenu();

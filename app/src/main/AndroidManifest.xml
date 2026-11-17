@@ -22,7 +22,5 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".NotebooksActivity" android:exported="false" />
         <activity android:name=".TrashActivity" android:exported="false" />
-        <activity android:name=".AppearanceActivity" android:exported="false" />
-        <activity android:name=".AboutActivity" android:exported="false" />
     </application>
 </manifest>

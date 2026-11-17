@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // nijatva-core's signature kit: ./gradlew :signature:publishToMavenLocal
+        mavenLocal()
     }
 }
 

@@ -12,10 +12,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nijatva.signature.SignatureTheme;
+
 import java.util.Calendar;
 
-/** Colour, spacing and small widget helpers. The palette mirrors {@link Theme}
- *  and is refreshed by {@link #apply(Activity)} at the top of every screen. */
+/** Colour, spacing and small widget helpers. The palette comes from nijatva-core's
+ *  SignatureTheme and is refreshed by {@link #apply(Activity)} on every screen, so
+ *  Notes follows the theme and accent the user picks in the shared Appearance screen. */
 public class Ui {
 
     public static int BG = 0xFF0E0E0E;
@@ -29,17 +32,24 @@ public class Ui {
     public static int ON_ACCENT = 0xFF10130F;
 
     public static void apply(Activity a) {
-        Theme.resolve(a);
-        BG = Theme.bg;
-        CARD = Theme.card;
-        CARD_HI = Theme.cardHi;
-        TEXT = Theme.text;
-        MUTED = Theme.muted;
-        ACCENT = Theme.accent;
-        LINE = Theme.line;
-        DANGER = Theme.danger;
-        ON_ACCENT = Theme.onAccent;
-        Theme.window(a);
+        SignatureTheme.applyTo(a);
+        BG = SignatureTheme.background(a);
+        CARD = SignatureTheme.surface(a);
+        CARD_HI = SignatureTheme.soft(SignatureTheme.accent(a), 0x1F);
+        TEXT = SignatureTheme.onSurface(a);
+        MUTED = SignatureTheme.muted(a);
+        ACCENT = SignatureTheme.accent(a);
+        LINE = SignatureTheme.hairline(a);
+        DANGER = SignatureTheme.isDark(a) ? 0xFFE0645A : 0xFFC0392B;
+        ON_ACCENT = SignatureTheme.onAccent(ACCENT);
+        // SignatureTheme handles the status bar; the navigation bar icons follow here.
+        int flags = a.getWindow().getDecorView().getSystemUiVisibility();
+        if (SignatureTheme.isDark(a)) {
+            flags &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        } else {
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        }
+        a.getWindow().getDecorView().setSystemUiVisibility(flags);
     }
 
     public static int dp(Context c, float v) {

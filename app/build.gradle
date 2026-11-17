@@ -10,8 +10,8 @@ android {
         applicationId 'in.devira.nijatva.notes'
         minSdk 26
         targetSdk 34
-        versionCode 4
-        versionName '0.2.1'
+        versionCode 5
+        versionName '0.3.0'
     }
 
     buildTypes {
@@ -31,7 +31,9 @@ android {
     }
 }
 
-// Deliberately empty: the app runs on the framework alone, with no AndroidX,
-// no GMS and no third-party libraries.
+// The one shared piece of the suite: nijatva-core's signature kit carries the
+// Appearance and Developer screens plus the palette, so every Nijatva app reads
+// the same. It is plain framework Java - no AndroidX, no Compose, no GMS.
 dependencies {
+    implementation 'com.nijatva:signature:1.0.0'
 }

@@ -32,29 +32,27 @@ Every Nijatva app has to run on AOSP without Google Play Services, which means i
 - Recently deleted: 30-day retention, restore, delete forever, empty
 - Vault: passphrase setup, per-note lock with AES-256-GCM, auto-lock on background
 - Export a note as `.md` through SAF
-- Appearance: System / Dark / Light / Black themes, Green / Saffron / Indigo accents
-- About: developer card with live GitHub profile link
+- Appearance and Developer screens, and the whole palette, come from nijatva-core's signature kit
 
 Not yet: import, grid view, biometric unlock, attachments, search index (FTS), Compose UI.
 
 ## Build
 
-Standard Gradle project, no plugins beyond the Android Gradle Plugin.
+Standard Gradle project. One dependency, from the suite's own library.
 
 ```sh
+# once, in a nijatva-core checkout
+./gradlew :signature:publishToMavenLocal
+
+# then here
 ./gradlew assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
-./gradlew assembleRelease      # unsigned; add your own signing config
 ```
 
-Requires JDK 17 and the Android SDK with platform 34 and build-tools 34.0.0. Open the folder in Android Studio and it configures itself.
+Requires JDK 17 and the Android SDK with platform 34 and build-tools 34.0.0.
 
-`build.sh` is a fallback that packages the same sources without Gradle (aapt2 → javac → d8 → zipalign → apksigner), for machines without Gradle or network access:
+## Shared with the rest of the suite
 
-```sh
-ANDROID_SDK_ROOT=~/Android/Sdk bash build.sh
-```
-
-The app has no dependencies — `app/build.gradle` has an empty `dependencies` block on purpose.
+`com.nijatva:signature` (from [nijatva-core](https://github.com/vasudev-work/nijatva-core)) supplies the Appearance screen (theme and accent), the Developer card, and the palette itself. Notes keeps no copy of that code: `Ui.apply()` reads `SignatureTheme`, and the menu opens `Signature.appearance()` and `Signature.developer()`. The theme and accent the user picks therefore read the same here as in every other Nijatva app.
 
 ## Documents
 
