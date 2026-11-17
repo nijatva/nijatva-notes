@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -174,6 +175,18 @@ public class MainActivity extends Activity {
         flp.gravity = Gravity.BOTTOM | Gravity.END;
         flp.setMargins(0, 0, Ui.dp(this, 20), Ui.dp(this, 24));
         root.addView(fab, flp);
+
+        final int fabMargin = Ui.dp(this, 24);
+        root.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                int bottom = insets.getSystemWindowInsetBottom();
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fab.getLayoutParams();
+                lp.bottomMargin = fabMargin + bottom;
+                fab.setLayoutParams(lp);
+                col.setPadding(col.getPaddingLeft(), col.getPaddingTop(), col.getPaddingRight(), bottom);
+                return insets;
+            }
+        });
 
         return root;
     }

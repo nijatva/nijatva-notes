@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -196,7 +197,27 @@ public class EditActivity extends Activity {
             tools.addView(b, lp);
         }
         hsv.addView(tools);
-        root.addView(hsv);
+
+        // The formatting bar is the bottom-most strip: give it a hairline and keep
+        // it clear of the navigation bar and the keyboard.
+        LinearLayout bar2 = new LinearLayout(this);
+        bar2.setOrientation(LinearLayout.VERTICAL);
+        bar2.setBackgroundColor(Ui.BG);
+        bar2.addView(Ui.divider(this));
+        bar2.addView(hsv);
+        root.addView(bar2);
+
+        final int padH = Ui.dp(this, 16);
+        root.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                int bottom = insets.getSystemWindowInsetBottom();
+                // adjustResize already shrinks the window for the IME, so only the
+                // navigation bar needs padding; a tall inset is the keyboard.
+                int pad = bottom > Ui.dp(EditActivity.this, 120) ? 0 : bottom;
+                v.setPadding(padH, Ui.dp(EditActivity.this, 16), padH, pad);
+                return insets;
+            }
+        });
 
         return root;
     }
