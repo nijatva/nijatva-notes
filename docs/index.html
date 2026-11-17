@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nijatva Notes — offline Markdown notes for Android</title>
+<meta name="description" content="Offline Markdown notes for Android with an optional encrypted vault. No account, no network permission, no Google Play Services.">
+<link rel="icon" href="assets/icon.png">
+<style>
+  :root {
+    --bg: #0B0B0C;
+    --surface: #141416;
+    --surface-2: #1B1B1E;
+    --text: #FFFFFF;
+    --muted: #A8A8AE;
+    --hairline: #26262A;
+    --green: #1E7A46;
+    --saffron: #D98431;
+    --indigo: #3F45A8;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--text); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 22px; }
+
+  header.top {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 0; border-bottom: 1px solid var(--hairline);
+  }
+  header.top .mark { width: 30px; height: 30px; border-radius: 8px; }
+  header.top .name { font-weight: 700; letter-spacing: .2px; }
+  header.top .spacer { flex: 1; }
+  header.top a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  header.top a:hover { color: var(--text); }
+
+  .hero { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 54px 0 40px; }
+  @media (min-width: 760px) { .hero { grid-template-columns: 1.15fr .85fr; align-items: center; } }
+  .hero h1 { font-size: 40px; line-height: 1.15; margin: 0 0 14px; letter-spacing: -.5px; }
+  .hero p.lede { color: var(--muted); font-size: 18px; margin: 0 0 26px; max-width: 46ch; }
+  .icon-big { width: 100%; max-width: 260px; border-radius: 56px; display: block; margin: 0 auto; }
+
+  .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 22px; border-radius: 999px; text-decoration: none;
+    font-weight: 600; font-size: 15px; border: 1px solid transparent;
+  }
+  .btn.primary { background: var(--green); color: #fff; }
+  .btn.primary:hover { background: #248b52; }
+  .btn.ghost { border-color: var(--hairline); color: var(--text); background: var(--surface); }
+  .btn.ghost:hover { background: var(--surface-2); }
+
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 13px; color: var(--muted); background: var(--surface);
+    border: 1px solid var(--hairline); padding: 5px 12px; border-radius: 999px;
+  }
+
+  section { padding: 46px 0; border-top: 1px solid var(--hairline); }
+  h2 { font-size: 24px; margin: 0 0 8px; letter-spacing: -.2px; }
+  .sub { color: var(--muted); margin: 0 0 26px; }
+
+  .shots { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+  .shots figure { margin: 0; flex: 1 1 260px; max-width: 300px; }
+  .shots img {
+    width: 100%; border-radius: 16px; border: 1px solid var(--hairline); display: block;
+  }
+  .shots figcaption { color: var(--muted); font-size: 13px; margin-top: 10px; text-align: center; }
+
+  .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+  ul.plain { margin: 0; padding-left: 20px; color: var(--muted); }
+  ul.plain li { margin: 7px 0; }
+  ul.plain strong { color: var(--text); }
+
+  .two { display: grid; gap: 26px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .two { grid-template-columns: 1fr 1fr; } }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--surface-2); border: 1px solid var(--hairline);
+    padding: 2px 7px; border-radius: 7px; font-size: 13.5px;
+  }
+  pre {
+    background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px;
+    padding: 16px 18px; overflow-x: auto; font-size: 13.5px; line-height: 1.5;
+  }
+  pre code { background: none; border: 0; padding: 0; }
+
+  .note {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-left: 3px solid var(--saffron);
+    border-radius: 12px; padding: 14px 18px; color: var(--muted); font-size: 14.5px;
+  }
+
+  footer { padding: 34px 0 60px; border-top: 1px solid var(--hairline); color: var(--muted); font-size: 14px; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--text); }
+  footer .row { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <img class="mark" src="assets/icon.png" alt="">
+    <span class="name">Nijatva Notes</span>
+    <span class="spacer"></span>
+    <a href="https://github.com/nijatva/nijatva-notes">Source</a>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Notes that stay on your phone.</h1>
+      <p class="lede">
+        Offline Markdown notes for Android, with an optional encrypted vault.
+        No account, no sync, no ads, no analytics — and no network permission at all.
+      </p>
+      <div class="buttons">
+        <a class="btn primary" href="https://github.com/nijatva/nijatva-notes/raw/main/dist/nijatva-notes-0.3.0.apk">Download APK</a>
+        <a class="btn ghost" href="https://github.com/nijatva/nijatva-notes">View on GitHub</a>
+      </div>
+      <div class="meta">
+        <span class="tag">151 KB</span>
+        <span class="tag">Android 8.0+</span>
+        <span class="tag">Zero permissions</span>
+        <span class="tag">Version 0.3.0</span>
+      </div>
+    </div>
+    <div>
+      <img class="icon-big" src="assets/icon.png" alt="Nijatva Notes icon: a notebook and pencil on navy">
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>What it looks like</h2>
+    <p class="sub">Plain Markdown in, plain Markdown out. The formatting bar sits above the keyboard, and Preview renders without leaving the note.</p>
+    <div class="shots">
+      <figure>
+        <img src="assets/editor-keyboard.jpg" alt="Editor with the keyboard open">
+        <figcaption>Writing, with the keyboard up</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/editor-toolbar.jpg" alt="Editor with the Markdown toolbar visible">
+        <figcaption>The Markdown toolbar</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="sub">Small and single-purpose, the way the rest of the suite is built.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Markdown, not a database</h3>
+        <p>Every note is a <code>.md</code> file in app-private storage. The index is rebuildable; a corrupt database costs you sorting, never your words.</p>
+      </div>
+      <div class="card">
+        <h3>An optional vault</h3>
+        <p>Lock a note and it is encrypted at rest with AES-256-GCM. The key is derived from your passphrase, lives in memory only, and is dropped when the app goes to the background.</p>
+      </div>
+      <div class="card">
+        <h3>Notebooks and a real trash</h3>
+        <p>Default and Quick note notebooks, plus your own. Deleted notes sit in Recently deleted for 30 days and can be restored.</p>
+      </div>
+      <div class="card">
+        <h3>Search, pins, favourites</h3>
+        <p>Filter by notebook or favourites, search across titles and bodies, sort by edited, created or title.</p>
+      </div>
+      <div class="card">
+        <h3>Export when you ask</h3>
+        <p>Send a note out as <code>.md</code> through the system file picker. Nothing leaves the app unless you choose a destination.</p>
+      </div>
+      <div class="card">
+        <h3>Follows the suite</h3>
+        <p>Theme and accent come from nijatva-core's signature kit — System, Dark, Light or Black, with a Green, Saffron or Indigo accent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Privacy, plainly</h2>
+    <p class="sub">Not a policy you have to trust — properties you can check in the manifest.</p>
+    <div class="two">
+      <div>
+        <ul class="plain">
+          <li><strong>No <code>INTERNET</code> permission.</strong> The app cannot open a socket, so it cannot phone home.</li>
+          <li><strong>No storage permission.</strong> Files move only through the system picker, one file at a time.</li>
+          <li><strong>No accounts, no ads, no analytics SDKs.</strong> There is no server to send anything to.</li>
+          <li><strong>No Google Play Services.</strong> Runs on AOSP, on de-Googled ROMs and on BharOS.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="note">
+          The vault protects notes from someone holding your unlocked phone, and from casual file browsing.
+          It does not defend against a determined attacker with root access to an unlocked device, and it is
+          not a substitute for full-disk encryption. If you forget the passphrase, locked notes cannot be
+          opened by anyone — including the developer.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Install</h2>
+    <p class="sub">The APK is a debug-signed test build, not a Play Store release.</p>
+    <pre><code>adb install nijatva-notes-0.3.0.apk</code></pre>
+    <ul class="plain">
+      <li>Or open the downloaded file on the phone and allow install from that app.</li>
+      <li>If an older Nijatva Notes is already installed, uninstall it first — each build is signed with a fresh debug key.</li>
+      <li>Requires Android 8.0 (API 26) or newer.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Status</h2>
+    <p class="sub">Version 0.3.0 — a working prototype, not a finished app.</p>
+    <div class="two">
+      <div>
+        <h3 style="font-size:15px;margin:0 0 8px">Working</h3>
+        <ul class="plain">
+          <li>Notes list with pins, favourites, search and sorting</li>
+          <li>Markdown editor with autosave, syntax toolbar and preview</li>
+          <li>Notebooks, Recently deleted, encrypted vault</li>
+          <li>Export to <code>.md</code>, shared Appearance and Developer screens</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:15px;margin:0 0 8px">Not there yet</h3>
+        <ul class="plain">
+          <li>Import from a folder or zip</li>
+          <li>Grid view, attachments, biometric unlock</li>
+          <li>Full-text search index (FTS)</li>
+          <li>Compose UI — the current build uses framework Views</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <span>Part of <a href="https://nijatva.github.io/">Nijatva</a> by DEVIRA — small Android apps without Google Play Services.</span>
+      <span>
+        <a href="https://github.com/nijatva/nijatva-notes">GitHub</a> ·
+        <a href="https://github.com/nijatva/nijatva-notes/blob/main/docs/SPEC.md">Spec</a> ·
+        <a href="https://github.com/nijatva/nijatva-core">nijatva-core</a>
+      </span>
+    </div>
+    <p style="margin:14px 0 0">Source licensed under Apache 2.0. The APK above is a debug-signed test build.</p>
+  </div>
+</footer>
+
+</body>
+</html>
