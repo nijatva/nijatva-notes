@@ -14,8 +14,9 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
+      # ubuntu-latest already ships the Android SDK and an accepted licence set,
+      # so there is no setup-android step to fail here.
       - name: Assemble the debug APK
         run: ./gradlew assembleDebug --no-daemon --stacktrace
       - name: Upload the APK
