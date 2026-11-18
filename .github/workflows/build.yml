@@ -17,6 +17,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       # ubuntu-latest already ships the Android SDK and an accepted licence set,
       # so there is no setup-android step to fail here.
+      - name: Make the wrapper executable
+        run: chmod +x ./gradlew
       - name: Assemble the debug APK
         run: ./gradlew assembleDebug --no-daemon --stacktrace
       - name: Upload the APK
