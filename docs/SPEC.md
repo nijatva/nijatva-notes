@@ -1,7 +1,7 @@
 # Nijatva Notes — Product & Technical Specification
 
 **App:** Notes (working title)
-**Suite:** Nijatva by DEVIRA
+**Suite:** Nijatva
 **Repo:** `vasudev-work/nijatva-notes`
 **Status:** Draft spec, pre-scaffold
 **Date:** 29 October 2026
@@ -217,7 +217,7 @@ Phase 1 of the suite build, as the README says — so this app is not competing 
 
 ## 11. Open questions
 
-1. **Application id and namespace.** `nijatva-core` does not declare one yet. Suggestion: `in.devira.nijatva.notes`, with core at `in.devira.nijatva.core`. Needs deciding before scaffold, because changing it later means a new install identity.
+1. **Application id and namespace.** `nijatva-core` does not declare one yet. Decided: `in.nijatva.notes`, with core at `in.nijatva.core`. Settled before the first release, because changing it later means a new install identity.
 2. **App name shown to the user.** "Notes" is generic and will collide in launchers. "Nijatva Notes" is unambiguous but long on a home screen. Suggest "Nijatva Notes" for the store listing and label, accepting the truncation.
 3. **Attachments.** Images in notes are in scope above, but they raise size, backup and encryption questions. Confirm, or cut to v1.1 and keep v1 text-only.
 4. **Suite build order.** Which of the eight apps is Phase 2? Notes is a good candidate — it exercises core's SAF, encrypted preferences and design system at once — but that is the tracker's call, not this document's.

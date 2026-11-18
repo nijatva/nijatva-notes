@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'in.devira.nijatva.notes'
+    namespace 'in.nijatva.notes'
     compileSdk 34
 
     defaultConfig {
-        applicationId 'in.devira.nijatva.notes'
+        applicationId 'in.nijatva.notes'
         minSdk 26
         targetSdk 34
         versionCode 5

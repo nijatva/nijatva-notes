@@ -2,7 +2,7 @@
 
 Offline Markdown notes with an optional encrypted vault.
 
-Part of the [Nijatva](https://vasudev-work.github.io) suite by **DEVIRA**: small, single-purpose Android apps built without Google Play Services, without accounts, without ads and without analytics.
+Part of the [Nijatva](https://nijatva.github.io) suite: small, single-purpose Android apps built without Google Play Services, without accounts, without ads and without analytics.
 
 **Page:** [nijatva.github.io/nijatva-notes](https://nijatva.github.io/nijatva-notes/)
 
@@ -54,7 +54,7 @@ Requires JDK 17 and the Android SDK with platform 34 and build-tools 34.0.0.
 
 ## Shared with the rest of the suite
 
-`com.nijatva:signature` (from [nijatva-core](https://github.com/vasudev-work/nijatva-core)) supplies the Appearance screen (theme and accent), the Developer card, and the palette itself. Notes keeps no copy of that code: `Ui.apply()` reads `SignatureTheme`, and the menu opens `Signature.appearance()` and `Signature.developer()`. The theme and accent the user picks therefore read the same here as in every other Nijatva app.
+`com.nijatva:signature` (from [nijatva-core](https://github.com/nijatva/nijatva-core)) supplies the Appearance screen (theme and accent), the Developer card, and the palette itself. Notes keeps no copy of that code: `Ui.apply()` reads `SignatureTheme`, and the menu opens `Signature.appearance()` and `Signature.developer()`. The theme and accent the user picks therefore read the same here as in every other Nijatva app.
 
 ## Documents
 

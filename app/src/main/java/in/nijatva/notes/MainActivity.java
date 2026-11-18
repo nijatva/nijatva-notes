@@ -1,4 +1,4 @@
-package in.devira.nijatva.notes;
+package in.nijatva.notes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
